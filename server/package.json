@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "svgexport": "^0.4.2",
+    "formidable": "^2.0.0"
+  }
+}
