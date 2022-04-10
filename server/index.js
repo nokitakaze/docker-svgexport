@@ -41,6 +41,10 @@ const requestListener = async function(req, res) {
 
     try {
         const parsed = await parseRequest(req);
+        if (typeof parsed.files.file === 'undefined') {
+            throw new Error('Field `file` is empty or malformed');
+        }
+
         const svgFilename = parsed.files.file.filepath + '.svg';
         console.info(svgFilename);
         await fs.rename(parsed.files.file.filepath, svgFilename);
@@ -75,11 +79,11 @@ const requestListener = async function(req, res) {
             res.end();
         }
     } catch (e) {
-        console.warn(svgFilename, e);
+        console.warn(e);
 
         res.writeHead(500, {'Content-Type': 'text/json; charset=utf-8'});
         res.write(JSON.stringify({
-            'error': e
+            'error': e + ''
         }));
         res.end();
     }
